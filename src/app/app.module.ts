@@ -12,17 +12,20 @@ import { ROUTES } from './app.routes';
 // App is our top level component
 import { App } from './app.component';
 import { AppState, InteralStateType } from './app.service';
-import { Home } from './home';
-import { About } from './about';
-import { NoContent } from './no-content';
-import { XLarge } from './home/x-large';
-import {RepoFilter} from "./repoFilter/RepoFilter.component";
-import {RepoList} from "./repoList/RepoList.component";
+import {About} from "./pages/about/about.component";
+import {Home} from "./pages/home/home.component";
+import {NoContent} from "./pages/no-content/no-content";
+
+import {RepoFilter} from "./components/repoFilter/RepoFilter.component";
+import {RepoList} from "./components/repoList/RepoList.component";
+import {HeroService} from "./services/hero.service";
+
 
 
 // Application wide providers
 const APP_PROVIDERS = [
-  AppState
+  AppState,
+  HeroService
 ];
 
 type StoreType = {
@@ -41,7 +44,7 @@ type StoreType = {
     About,
     Home,
     NoContent,
-    XLarge,
+
     RepoFilter,
     RepoList
   ],

@@ -1,9 +1,7 @@
 /*
  * Angular 2 decorators and services
  */
-import { Component, ViewEncapsulation } from '@angular/core';
-
-import { AppState } from './app.service';
+import { Component, ViewEncapsulation, OnInit } from '@angular/core';
 
 /*
  * App Component
@@ -19,21 +17,46 @@ import { AppState } from './app.service';
     <nav>GitHub API</nav>
     <main>
       <router-outlet></router-outlet>
-    </main>
-  `
+    </main>`,
+
+  // providers: [HeroService]
+
 })
-export class App {
+export class App  {
 
-  constructor(
-    public appState: AppState) {
 
-  }
-
-  ngOnInit() {
-    console.log('Initial App State', this.appState.state);
-  }
+//
+//
+//   heroes: Hero[];
+//   selectedHero: Hero;
+//
+//   constructor
+//     //(public appState: AppState) {}
+//
+//
+// (private heroService: HeroService) { }
+//
+// getHeroes(): void {
+//   this.heroes = this.heroService.getHeroes();;
+// }
+//
+//
+//
+// ngOnInit(): void {
+//   this.getHeroes();
+// //console.log('Initial App State', this.appState.state)
+// }
+// onSelect(hero: Hero): void {
+//   this.selectedHero = hero;
+// }
 
 }
+
+
+
+
+
+
 
 /*
  * Please review the https://github.com/AngularClass/angular2-examples/ repo for

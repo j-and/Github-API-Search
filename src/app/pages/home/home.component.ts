@@ -1,7 +1,9 @@
-import { Component } from '@angular/core';
+import { Component, Input, Output } from '@angular/core';
 
-import { AppState } from '../app.service';
+
 import { Title } from './title';
+import {AppState} from "../../app.service";
+import {HeroService} from "../../services/hero.service";
 
 
 @Component({
@@ -16,24 +18,25 @@ import { Title } from './title';
   // Our list of styles in our component. We may add more to compose many styles together
   styleUrls: [ './home.style.css' ],
   // Every Angular template is first compiled by the browser before Angular runs it's compiler
-  templateUrl: './home.template.html'
+  templateUrl: './home.template.html',
+  directives: 'RepoList.component.ts'
 })
 export class Home {
-  // Set our default values
-  localState = { value: '' };
+
+  childTitle:string = 'This text is passed to child';
+
+  repositories: Array<any> = [];
+  //@Input() searchTerm:string;
+  // @Output() repositories: Array<any>;
+
+
   // TypeScript public modifiers
-  constructor(public appState: AppState, public title: Title) {
+  constructor(private heroService: HeroService) {
 
   }
 
-  ngOnInit() {
-    console.log('hello `Home` component');
-    // this.title.getData().subscribe(data => this.data = data);
+  doSearch(term) {
+    this.repositories = this.heroService.getHeroes(term);
   }
 
-  submitState(value: string) {
-    console.log('submitState', value);
-    this.appState.set('value', value);
-    this.localState.value = '';
-  }
 }
