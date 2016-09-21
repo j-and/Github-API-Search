@@ -1,36 +1,30 @@
-/*
- * Angular 2 decorators and services
- */
-import { Component, ViewEncapsulation } from '@angular/core';
+import {Component, ViewEncapsulation} from '@angular/core';
 
-import { AppState } from './app.service';
+//import { filterState } from './app.service';
 
 /*
  * App Component
  * Top Level Component
  */
 @Component({
-  selector: 'app',
+  selector: 'RepoFilter',
   encapsulation: ViewEncapsulation.None,
   styleUrls: [
-    './app.style.css'
+    '../app.style.css'
   ],
-  template: `
-    <nav>GitHub API</nav>
-    <main>
-      <router-outlet></router-outlet>
-    </main>
-  `
+  templateUrl: './RepoFilter.html'
 })
-export class App {
 
-  constructor(
-    public appState: AppState) {
+
+export class RepoFilter {
+
+  constructor() {
+    //public filterState: filterState
 
   }
 
   ngOnInit() {
-    console.log('Initial App State', this.appState.state);
+   //console.log('Initial Filter State', this.filterState.state);
   }
 
 }

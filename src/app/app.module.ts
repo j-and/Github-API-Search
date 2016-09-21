@@ -18,6 +18,9 @@ import { Home } from './home';
 import { About } from './about';
 import { NoContent } from './no-content';
 import { XLarge } from './home/x-large';
+import {RepoFilter} from "./repoFilter/RepoFilter.component";
+import {RepoList} from "./repoList/RepoList.component";
+
 
 // Application wide providers
 const APP_PROVIDERS = [
@@ -41,7 +44,9 @@ type StoreType = {
     About,
     Home,
     NoContent,
-    XLarge
+    XLarge,
+    RepoFilter,
+    RepoList
   ],
   imports: [ // import Angular's modules
     BrowserModule,
