@@ -1,5 +1,3 @@
-// TODO(gdi2290): switch to DLLs
-
 // Polyfills
 
 // import 'ie-shim'; // Internet Explorer 9 support
@@ -24,8 +22,7 @@ import 'core-js/es6/weak-map';
 import 'core-js/es6/weak-set';
 import 'core-js/es6/typed';
 import 'core-js/es6/reflect';
-// see issue https://github.com/AngularClass/angular2-webpack-starter/issues/709
-// import 'core-js/es6/promise';
+import 'core-js/es6/promise';
 
 import 'core-js/es7/reflect';
 import 'zone.js/dist/zone';
