@@ -1,4 +1,4 @@
-<RepoFilter  (searchTerm)='onSubmit()'></RepoFilter>
-<RepoList (repos)="repositories"></RepoList>
+<RepoFilter  (onSearch)="onSearch($event)"></RepoFilter>
+<RepoList [repos]="repositories"></RepoList>
 
 
