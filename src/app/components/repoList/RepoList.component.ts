@@ -1,5 +1,4 @@
 import {Component, ViewEncapsulation, Input} from '@angular/core';
-import {RepoService} from "../../services/repo.service";
 import {Repo} from "../../services/repo";
 
 
@@ -10,19 +9,14 @@ import {Repo} from "../../services/repo";
 @Component({
   selector: 'RepoList',
   encapsulation: ViewEncapsulation.None,
-  /*styleUrls: [
-   '../app.style.css'
-   ],*/
   templateUrl: './RepoList.html',
-
 })
 
 
 export class RepoList {
-  @Input() repos:Repo[];
+  @Input() repos: Repo[];
 
-      constructor() {
-
+  constructor() {
   }
 
 }

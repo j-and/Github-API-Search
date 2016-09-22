@@ -3,9 +3,6 @@ import {Component, ViewEncapsulation, Input, Output, EventEmitter} from '@angula
 @Component({
   selector: 'RepoFilter',
   encapsulation: ViewEncapsulation.None,
-  /* styleUrls: [
-   '../app.style.css'
-   ],*/
   templateUrl: './RepoFilter.html'
 })
 
@@ -13,13 +10,14 @@ import {Component, ViewEncapsulation, Input, Output, EventEmitter} from '@angula
 export class RepoFilter {
   searchTerm: string;
 
-   @Output() onSearch = new EventEmitter();
+  @Output() onSearch = new EventEmitter();
+
+  constructor() {
+  }
 
   search() {
     this.onSearch.emit(this.searchTerm);
   }
 
-  constructor() {
-  }
 }
 

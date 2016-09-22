@@ -17,13 +17,12 @@ export class Home {
 
   repositories: Repo[];
 
-  onSearch(searchTerm) {
-    console.log("search", searchTerm); //, this.repositories);
-    this.repositories = this.repoService.getRepos(searchTerm);
-  }
-
   constructor(private repoService: RepoService) {
 
   }
 
+  onSearch(searchTerm) {
+    console.log("search", searchTerm); //, this.repositories);
+    this.repositories = this.repoService.getRepos(searchTerm);
+  }
 }
