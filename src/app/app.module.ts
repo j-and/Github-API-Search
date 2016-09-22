@@ -18,14 +18,14 @@ import {NoContent} from "./pages/no-content/no-content";
 
 import {RepoFilter} from "./components/repoFilter/RepoFilter.component";
 import {RepoList} from "./components/repoList/RepoList.component";
-import {HeroService} from "./services/hero.service";
+import {RepoService} from "./services/repo.service";
 
 
 
 // Application wide providers
 const APP_PROVIDERS = [
   AppState,
-  HeroService
+  RepoService
 ];
 
 type StoreType = {

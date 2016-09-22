@@ -1,5 +1,5 @@
 import {Component, ViewEncapsulation, Input} from '@angular/core';
-import {HeroService} from "../../services/hero.service";
+import {RepoService} from "../../services/repo.service";
 import {Repo} from "../../services/repo";
 
 

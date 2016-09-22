@@ -1,29 +1,28 @@
-import { Component, Input} from '@angular/core';
+import {Component} from '@angular/core';
 
 import {Repo} from "../../services/repo";
-import { Title } from './title';
-import {HeroService} from "../../services/hero.service";
+import {Title} from './title';
+import {RepoService} from "../../services/repo.service";
 
 @Component({
-    selector: 'home',
-    providers: [
+  selector: 'home',
+  providers: [
     Title
   ],
-    styleUrls: [ './home.style.css' ],
-    templateUrl: './home.template.html',
+  styleUrls: ['./home.style.css'],
+  templateUrl: './home.template.html',
   directives: 'RepoList.component.ts'
 })
 export class Home {
 
-  @Input() searchTerm:string;
-  repositories:Repo[];
+  repositories: Repo[];
 
   onSearch(searchTerm) {
     console.log("search", searchTerm); //, this.repositories);
-    this.repositories = this.heroService.getHeroes(searchTerm);
+    this.repositories = this.repoService.getRepos(searchTerm);
   }
 
-  constructor(private heroService: HeroService) {
+  constructor(private repoService: RepoService) {
 
   }
 

@@ -13,8 +13,7 @@ import {Component, ViewEncapsulation, Input, Output, EventEmitter} from '@angula
 export class RepoFilter {
   searchTerm: string;
 
-  @Input() name: string;
-  @Output() onSearch = new EventEmitter();
+   @Output() onSearch = new EventEmitter();
 
   search() {
     this.onSearch.emit(this.searchTerm);
