@@ -2,9 +2,14 @@
   <ul>
 
     <li *ngFor="let repo of repos">
-      <span>{{repo.id}}</span> {{repo.name}}
+      <a [href]="repo.clone_url" target="_blank"><span>{{repo.score}}</span> {{repo.name}}</a>
     </li>
 
   </ul>
+
+
 </div>
+
+
+
 

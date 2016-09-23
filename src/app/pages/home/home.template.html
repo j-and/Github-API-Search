@@ -1,4 +1,6 @@
-<RepoFilter  (onSearch)="onSearch($event)"></RepoFilter>
+<RepoFilter (onSearch)="onSearch($event)"></RepoFilter>
 <RepoList [repos]="repositories"></RepoList>
+
+<div *ngIf="loading">Loading...</div>
 
 

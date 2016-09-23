@@ -1,14 +1,6 @@
-/**
- * @author: @AngularClass
- */
-
 const webpack = require('webpack');
 const helpers = require('./helpers');
 
-/*
- * Webpack Plugins
- */
-// problem with copy-webpack-plugin
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const ForkCheckerPlugin = require('awesome-typescript-loader').ForkCheckerPlugin;
@@ -24,12 +16,7 @@ const METADATA = {
   isDevServer: helpers.isWebpackDevServer()
 };
 
-/*
- * Webpack configuration
- *
- * See: http://webpack.github.io/docs/configuration.html#cli
- */
-module.exports = function(options) {
+module.exports = function (options) {
   return {
 
     /*
@@ -39,41 +26,16 @@ module.exports = function(options) {
      */
     metadata: METADATA,
 
-    /*
-     * Cache generated modules and chunks to improve performance for multiple incremental builds.
-     * This is enabled by default in watch mode.
-     * You can pass false to disable it.
-     *
-     * See: http://webpack.github.io/docs/configuration.html#cache
-     */
-     //cache: false,
-
-    /*
-     * The entry point for the bundle
-     * Our Angular.js app
-     *
-     * See: http://webpack.github.io/docs/configuration.html#entry
-     */
     entry: {
 
       'polyfills': './src/polyfills.browser.ts',
-      'vendor':    './src/vendor.browser.ts',
-      'main':      './src/main.browser.ts'
+      'vendor': './src/vendor.browser.ts',
+      'main': './src/main.browser.ts'
 
     },
 
-    /*
-     * Options affecting the resolving of modules.
-     *
-     * See: http://webpack.github.io/docs/configuration.html#resolve
-     */
     resolve: {
 
-      /*
-       * An array of extensions that should be used to resolve modules.
-       *
-       * See: http://webpack.github.io/docs/configuration.html#resolve-extensions
-       */
       extensions: ['', '.ts', '.js', '.json'],
 
       // Make sure root is src
@@ -84,18 +46,8 @@ module.exports = function(options) {
 
     },
 
-    /*
-     * Options affecting the normal modules.
-     *
-     * See: http://webpack.github.io/docs/configuration.html#module
-     */
     module: {
 
-      /*
-       * An array of applied pre and post loaders.
-       *
-       * See: http://webpack.github.io/docs/configuration.html#module-preloaders-module-postloaders
-       */
       preLoaders: [
         {
           test: /\.ts$/,
@@ -110,14 +62,6 @@ module.exports = function(options) {
 
       ],
 
-      /*
-       * An array of automatically applied loaders.
-       *
-       * IMPORTANT: The loaders here are resolved relative to the resource which they are applied to.
-       * This means they are not resolved relative to the configuration file.
-       *
-       * See: http://webpack.github.io/docs/configuration.html#module-loaders
-       */
       loaders: [
 
         /*
@@ -136,39 +80,22 @@ module.exports = function(options) {
           exclude: [/\.(spec|e2e)\.ts$/]
         },
 
-        /*
-         * Json loader support for *.json files.
-         *
-         * See: https://github.com/webpack/json-loader
-         */
         {
           test: /\.json$/,
           loader: 'json-loader'
         },
 
-        /*
-         * to string and css loader support for *.css files
-         * Returns file content as string
-         *
-         */
         {
           test: /\.css$/,
           loaders: ['to-string-loader', 'css-loader']
         },
 
-        /* Raw loader support for *.html
-         * Returns file content as string
-         *
-         * See: https://github.com/webpack/raw-loader
-         */
         {
           test: /\.html$/,
           loader: 'raw-loader',
           exclude: [helpers.root('src/index.html')]
         },
 
-        /* File loader for supporting images, for example, in CSS files.
-        */
         {
           test: /\.(jpg|png|gif)$/,
           loader: 'file'
@@ -188,11 +115,6 @@ module.exports = function(options) {
       ]
     },
 
-    /*
-     * Add additional plugins to the compiler.
-     *
-     * See: http://webpack.github.io/docs/configuration.html#plugins
-     */
     plugins: [
       new AssetsPlugin({
         path: helpers.root('dist'),

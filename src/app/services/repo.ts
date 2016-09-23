@@ -1,6 +1,5 @@
 export class Repo {
-  id: number;
   name: string;
+  score: number;
+  clone_url: string;
 }
-
-
