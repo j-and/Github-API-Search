@@ -11,7 +11,7 @@ import {Repo} from "../../services/repo";
 
 export class RepoList {
 
-  @Input() repos: Repo[] = [];
+  @Input() repos: Repo[];
 
   constructor() {
   }
