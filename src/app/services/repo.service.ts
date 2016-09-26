@@ -1,7 +1,8 @@
 import {Injectable} from '@angular/core';
-import {Repo} from './repo';
+
 import {Http} from '@angular/http';
 import 'rxjs/add/operator/toPromise';
+import {Repo} from "./repo";
 
 var BASE_URL = 'https://api.github.com/';
 
@@ -17,7 +18,7 @@ export class RepoService {
       .then(response => {
         console.log(response);
         let data = response.json();
-        console.log(data);
+        console.log(data.items);
 
         // var filtered = data.items.filter((value: Repo) => {
         //   var lowerStr = value.name.toLowerCase();
@@ -25,7 +26,7 @@ export class RepoService {
         // });
         // console.log("filtered", filtered);
 
-        return data;
+        return data.items;
       });
   }
 }
