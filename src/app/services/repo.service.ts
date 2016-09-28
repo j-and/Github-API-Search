@@ -1,8 +1,8 @@
 import {Injectable} from '@angular/core';
-
-import {Http} from '@angular/http';
+import {Http, Response} from '@angular/http';
 import 'rxjs/add/operator/toPromise';
 import {Repo} from "./repo";
+import {RepoDetails} from "./repoDetails";
 
 var BASE_URL = 'https://api.github.com/';
 
@@ -12,21 +12,23 @@ export class RepoService {
   }
 
   getRepos(term: string): Promise<Repo[]> {
-
     return this.http.get(`${BASE_URL}search/repositories?q=${term}+language:javascript&sort=stars&order=desc`)
       .toPromise()
       .then(response => {
         console.log(response);
-        let data = response.json();
-        console.log(data.items);
+        let data = response.json().items;
+        console.log(data);
+        return data;
+      })
+  }
 
-        // var filtered = data.items.filter((value: Repo) => {
-        //   var lowerStr = value.name.toLowerCase();
-        //   return (value.score >= 10 && lowerStr.indexOf(term) > -1);
-        // });
-        // console.log("filtered", filtered);
-
-        return data.items;
-      });
+  getRepoDetails(owner: string, repo: string): Promise<RepoDetails> {
+    return this.http.get(`${BASE_URL}repos/${owner}/${repo}`)
+      .toPromise()
+      .then(response => {
+        let repoDetails = response.json();
+        console.log("repoDetails", repoDetails);
+        return repoDetails;
+      })
   }
 }

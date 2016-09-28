@@ -3,9 +3,9 @@ import { Component } from '@angular/core';
 import { inject, TestBed } from '@angular/core/testing';
 
 // Load the implementations that should be tested
-import { About } from './about.component';
+import { RepoDetails } from './repoDetails.component';
 
-describe('About', () => {
+describe('repoDetails', () => {
   // provide our implementations or mocks to the dependency injector
   beforeEach(() => TestBed.configureTestingModule({
     providers: [
@@ -20,15 +20,15 @@ describe('About', () => {
           }
         }
       },
-      About
+      RepoDetails
     ]
   }));
 
-  it('should log ngOnInit', inject([About], (about: About) => {
+  it('should log ngOnInit', inject([RepoDetails], (repoDetails: RepoDetails) => {
     spyOn(console, 'log');
     expect(console.log).not.toHaveBeenCalled();
 
-    about.ngOnInit();
+    RepoDetails.ngOnInit();
     expect(console.log).toHaveBeenCalled();
   }));
 
