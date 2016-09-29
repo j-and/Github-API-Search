@@ -1,0 +1,14 @@
+<div *ngIf="repoDetails">
+  <table>
+    <tr>
+      <th>Name</th>
+      <th>Owner</th>
+    <tr>
+      <td>{{repoDetails.name}}</td>
+      <td>{{repoDetails.owner['login']}}</td>
+    </tr>
+  </table>
+</div>
+
+<div *ngIf="loadingTable">Loading...</div>
+<div *ngIf="message">{{message}}</div>

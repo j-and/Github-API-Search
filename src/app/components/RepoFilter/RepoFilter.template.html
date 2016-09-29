@@ -1,0 +1,10 @@
+<form #f="ngForm" (ngSubmit)="search()" required>
+<span>
+  <input autofocus required minlength="3" [(ngModel)]="searchTerm" name="searchTerm" placeholder="Type name of repository">
+ </span>
+  <span> <button md-button class="md-primary" type="submit" [disabled]="!f.valid">Search</button></span>
+</form>
+
+
+
+<!--action="demo_form.asp" accept-charset="ISO-8859-1"-->

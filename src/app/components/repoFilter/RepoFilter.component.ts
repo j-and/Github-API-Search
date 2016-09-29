@@ -3,7 +3,7 @@ import {Component, ViewEncapsulation, Input, Output, EventEmitter} from '@angula
 @Component({
   selector: 'RepoFilter',
   encapsulation: ViewEncapsulation.None,
-  templateUrl: './RepoFilter.html'
+  templateUrl: './RepoFilter.template.html'
 })
 
 

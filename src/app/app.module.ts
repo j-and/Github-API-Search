@@ -3,7 +3,6 @@ import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import { RouterModule } from '@angular/router';
-
 /*
  * Platform and Environment providers/directives/pipes
  */
@@ -12,20 +11,18 @@ import { ROUTES } from './app.routes';
 // App is our top level component
 import { App } from './app.component';
 import { AppState, InteralStateType } from './app.service';
-import {About} from "./pages/about/about.component";
 import {Home} from "./pages/home/home.component";
 import {NoContent} from "./pages/no-content/no-content";
-
 import {RepoFilter} from "./components/repoFilter/RepoFilter.component";
 import {RepoList} from "./components/repoList/RepoList.component";
 import {RepoService} from "./services/repo.service";
-
-
+import {RepoDetails} from "./pages/repoDetails/repoDetails.component";
 
 // Application wide providers
 const APP_PROVIDERS = [
   AppState,
   RepoService
+
 ];
 
 type StoreType = {
@@ -41,10 +38,9 @@ type StoreType = {
   bootstrap: [ App ],
   declarations: [
     App,
-    About,
+    RepoDetails,
     Home,
     NoContent,
-
     RepoFilter,
     RepoList
   ],
@@ -52,7 +48,9 @@ type StoreType = {
     BrowserModule,
     FormsModule,
     HttpModule,
-    RouterModule.forRoot(ROUTES, { useHash: true })
+    RouterModule.forRoot(ROUTES, { useHash: true }),
+   // MdModule.forRoot(),
+
   ],
   providers: [ // expose our Services and Providers into Angular's dependency injection
     ENV_PROVIDERS,
