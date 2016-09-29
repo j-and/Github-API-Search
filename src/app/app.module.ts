@@ -17,8 +17,6 @@ import {RepoFilter} from "./components/repoFilter/RepoFilter.component";
 import {RepoList} from "./components/repoList/RepoList.component";
 import {RepoService} from "./services/repo.service";
 import {RepoDetails} from "./pages/repoDetails/repoDetails.component";
-import {MATERIAL_DIRECTIVES, MATERIAL_PROVIDERS} from "node_modules/ng2-material/ng2-material";
-//import {MdModule} from "./md.module";
 
 // Application wide providers
 const APP_PROVIDERS = [

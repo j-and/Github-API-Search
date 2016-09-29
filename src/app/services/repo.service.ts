@@ -1,8 +1,7 @@
 import {Injectable} from '@angular/core';
-import {Http, Response} from '@angular/http';
+import {Http} from '@angular/http';
 import 'rxjs/add/operator/toPromise';
 import {Repo} from "./repo";
-import {RepoDetails} from "./repoDetails";
 
 var BASE_URL = 'https://api.github.com/';
 
@@ -22,7 +21,7 @@ export class RepoService {
       })
   }
 
-  getRepoDetails(owner: string, repo: string): Promise<RepoDetails> {
+  getRepoDetails(owner: string, repo: string): Promise<Repo> {
     return this.http.get(`${BASE_URL}repos/${owner}/${repo}`)
       .toPromise()
       .then(response => {

@@ -1,5 +1,5 @@
 <RepoFilter (onSearch)="onSearch($event)"></RepoFilter>
-<RepoList [repos]="repositories" (click)="showRepoDetails()"></RepoList>
+<RepoList [repos]="repositories"></RepoList>
 
 <div *ngIf="loading">Loading...</div>
 <div *ngIf="message">{{message}}</div>

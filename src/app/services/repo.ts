@@ -4,5 +4,6 @@ export class Repo {
   clone_url: string;
   owner: string;
   id:number;
+  repo:string;
 }
 

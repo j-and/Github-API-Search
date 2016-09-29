@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute}   from '@angular/router';
 import {RepoService} from "../../services/repo.service";
+import {Repo} from "../../services/repo";
 
 @Component({
   selector: 'repoDetails',
@@ -8,9 +9,8 @@ import {RepoService} from "../../services/repo.service";
 })
 
 export class RepoDetails implements OnInit {
-  repoDetails: RepoDetails;
+  repoDetails: Repo;
   loadingTable = false;
-  table = true;
   message = "";
 
   ngOnInit(): void {
@@ -20,14 +20,12 @@ export class RepoDetails implements OnInit {
 
   showDetails(owner, repo) {
     this.loadingTable = true;
-    this.table = false;
     this.message = "";
     let self = this;
     this.repoService.getRepoDetails(owner, repo)
       .then(function (repo) {
         self.repoDetails = repo;
         self.loadingTable = false;
-        self.table = true;
         return self.repoDetails
       })
       .catch(error=> {
