@@ -1,16 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<meta charset="utf-8">
-	<meta http-equiv="x-ua-compatible" content="ie=edge">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta charset="utf-8">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
 
-	<title>Git API Search</title>
+  <title>Git API Search</title>
 
-	<!--<link rel="icon" type="image/png" sizes="32x32" href="/assets/icon/favicon-32x32.png">
-	<link rel="icon" type="image/png" sizes="96x96" href="/assets/icon/favicon-96x96.png">
-	<link rel="icon" type="image/png" sizes="16x16" href="/assets/icon/favicon-16x16.png">-->
- <link rel="stylesheet" href="./styles.css">
+  <link rel="stylesheet" href="./styles.css">
 
 
 </head>
@@ -19,25 +16,27 @@
 
 <h2>Git API Search</h2>
 
-	<form  required>
+<form required onsubmit="enterSearchTerm(event)"  >
 		<span>
-			<input autofocus required minlength="3"  name="searchTerm" placeholder="Type name of repository">
+			<input id="searchTerm" autofocus required minlength="3" name="searchTerm" placeholder="Type name of repository" onclick="clearPage()">
 		</span>
-		<span > <button  type="submit" >Search</button></span>
+  <span> <button id="buttonSearch" class="buttonDisabled" onclick="clearList()">Search</button></span>
 
-		<div>
-			<ul>
-				<li>
-					<a href="" class="red">Repo.name</a>
-				</li>
-			</ul>
+  <div id="loading"></div>
 
-		</div>
-	</form>
+  <div>
+    <ul id="list">
+    </ul>
 
-	<script src="./legacyCode.js"></script>
+  </div>
+</form>
+
+<script src="./legacyCode.js"></script>
 
 
 </body>
 
 </html>
+
+
+
