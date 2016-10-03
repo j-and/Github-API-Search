@@ -8,7 +8,7 @@
   var inputDiv = document.getElementById("inputDiv");
   var RepoList = document.getElementById("list");
 
-  document.addEventListener("DOMContentLoaded", init(), event);
+  document.addEventListener("DOMContentLoaded", init, event);
 
   function init() {
     searchTerm.addEventListener("click", clearPage);
