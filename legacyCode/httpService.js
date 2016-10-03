@@ -30,9 +30,9 @@
   }
 
   function parseItems(items) {
-    var repos = [];
+    var repos = [], item;
     for (var i = 0; i < items.length; i++) {
-      var item = items[i];
+      item = items[i];
       repos.push(new GAE.model.Repo(item));
     }
     return repos;
