@@ -1,5 +1,13 @@
-console.log("styles are there");
-
-.red{
-	font-style: italic;
+.start-title {
+  position: relative;
+  margin-top: 15%;
+  text-align: center;
 }
+
+.start-input {
+  position: relative;
+  margin-top: 5%;
+  text-align: center;
+}
+
+
