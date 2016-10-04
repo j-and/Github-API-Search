@@ -1,13 +1,81 @@
-.start-title {
-  position: relative;
-  margin-top: 15%;
-  text-align: center;
-}
-
 .start-input {
-  position: relative;
-  margin-top: 5%;
-  text-align: center;
+  position: absolute;
+  top: 50%;
+  width: 80%;
 }
 
+.small-input {
+  aria-describedby: sizing-addon3;
+  position: relative;
+  top: 10%;
+}
 
+.row-position {
+  position: relative;
+  top: 15%;
+}
+
+.loader {
+  border: 8px solid #f3f3f3; /* Light grey */
+  border-top: 8px solid #3498db; /* Blue */
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  animation: spin 2s linear infinite;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.image-position {
+  position: absolute;
+  top: 10px;
+  left: 25px;
+  height: 100px;
+  width: 100px;
+}
+
+.button-position {
+  position: absolute;
+  bottom: 5%;
+  right: -76%;
+}
+
+.date-position {
+  position: absolute;
+  top: 5%;
+  right: -75%;
+}
+
+.loading-position {
+  position: absolute;
+  left: 5%;
+  width: 35px;
+  height: 35px;
+}
+
+.container-size {
+  height: 100%;
+  width: 20%;
+}
+
+.right-align {
+  position: relative;
+  left: 20%;
+  top: 5%
+}
+
+.input-position {
+  width: 80%;
+  float: right;
+}
+
+.thumbnail-position{
+  width:210%;
+}

@@ -35,6 +35,7 @@
       item = items[i];
       repos.push(new GAE.model.Repo(item));
     }
+    console.log(items) //to show properties of response (Object)
     return repos;
   }
 })();
