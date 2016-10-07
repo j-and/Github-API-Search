@@ -1,19 +1,32 @@
 (function () {
 
-  var inputForm = document.getElementById("inputForm");
-  var buttonSearch = document.getElementById("buttonSearch");
-  var searchTerm = document.getElementById("searchTerm");
-  var loading = document.getElementById("loading");
-  var inputDiv = document.getElementById("inputDiv");
-  var RepoList = document.getElementById("list");
-  var spanButtonSearch = document.getElementById("spanButtonSearch");
+  var inputForm;
+  var RepoList;
+  var template;
+  var buttonSearch;
+  var searchTerm;
+  var loading;
+  var message;
 
   document.addEventListener("DOMContentLoaded", init, event);
 
   function init() {
+    message = document.getElementById("message");
+    inputForm = document.getElementById("inputForm");
+    buttonSearch = document.getElementById("buttonSearch");
+    searchTerm = document.getElementById("searchTerm");
+    loading = document.getElementById("loading");
+    RepoList = document.getElementById("list");
+    var source = document.getElementById("block-template").innerHTML;
     searchTerm.addEventListener("click", clearPage);
     inputForm.addEventListener("submit", enterSearchTerm);
     buttonSearch.addEventListener("click", clearList);
+    template = Handlebars.compile(source);
+
+    $(list).on("click", "a", function () {
+      var data = this.dataset;
+      GAE.modal.showRepoDetails(data.owner, data.name);
+    });
   }
 
   function enterSearchTerm(event) {
@@ -24,40 +37,26 @@
         function success(repos) {
           showRepoList(repos);
           loading.removeAttribute("class", "loader");
-          inputForm.removeAttribute("class");
-          spanButtonSearch.removeAttribute("class");
-          searchTerm.setAttribute("class", "small-input");
-          spanButtonSearch.setAttribute("class", "small-buttonSearch");
+          inputForm.removeAttribute("class", "start-input");
         },
         function error() {
-          Promise.reject("HTTP request is failed");
-          loading.innerText = "Error";
+          loading.removeAttribute("class", "loader");
+          message.innerText = "No repositories is found";
         }
       );
   }
 
-  function showRepoList(items) {
-    items.forEach(function (repo) {
-      var caption = list.appendChild(document.createElement('caption'));
-      a = document.createElement('a');
-      var date = new Date(Date.parse(repo.updated_at));
-      // a.href = repo.url;
-      // a.innerHTML = repo.name;
-      caption.appendChild(a);
-      var source = document.getElementById("block-template").innerHTML;
-      var template = Handlebars.compile(source);
+  function showRepoList(repos) {
+    var listContent = "";
+    repos.forEach(function (repo) {
+      var date = new Date(repo.updatedAt);
       var context = {
-        ownerAvatarUrl: repo.owner.avatar_url,
-        ownerLogin: repo.owner.login,
-        repoName: repo.name,
-        repoDescription: repo.description,
+        Repo: repo,
         repoDate: date.toLocaleDateString() + " " + date.getHours() + ":" + date.getMinutes()
       };
-      var html = template(context);
-      var div = document.createElement("div");
-      div.innerHTML = html;
-      caption.appendChild(div)
+      listContent += template(context);
     });
+    list.innerHTML = listContent;
   }
 
   function clearPage() {
@@ -68,5 +67,4 @@
   function clearList() {
     RepoList.innerHTML = '';
   }
-
 })();

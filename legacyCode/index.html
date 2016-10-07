@@ -16,61 +16,126 @@
 
 <body>
 <div class="page-header">
-  <h1>Git API Search </h1>
+  <h1 class="col-md-offset-1">Git API Search </h1>
 </div>
 
 <div class="container">
   <form id="inputForm" class="start-input">
     <div id="inputRow" class="row row-position">
       <span id="loading" class="loading-position"></span>
-      <span class="input-group input-position">
+            <span class="input-group col-md-8 col-md-offset-2">
         <input type="text" class="form-control" id="searchTerm" placeholder="Type name of repository" autofocus required
                minlength="3">
         <span id="spanButtonSearch" class="input-group-btn"><button id="buttonSearch" type="submit"
                                                                     class="btn btn-default">Search</button></span>
       </span>
+      <span class="col-md-offset-2" id="message"></span>
     </div>
   </form>
   <div>
-    <ul id="list" class="col-md-8">
+    <ul id="list" class="col-md-12">
     </ul>
+  </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+          aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">Information about repository</h4>
+      </div>
+
+      <div class="modal-body" id="modalBody">
+        Loading...
+      </div>
+
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
   </div>
 </div>
 
 <script type="text/javascript"
         src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.5/handlebars.min.js"></script>
-<!--<script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>-->
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.js"></script>
+<script type="text/javascript"
+        src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0-alpha/js/bootstrap.js"></script>
+
 <script src="./app.js"></script>
 <script src="./httpService.js"></script>
 <script src="./repoModel.js"></script>
+<script src="./repoDetails.js"></script>
 
-
+<!--block-template-->
 <script id="block-template" type="text/x-handlebars-template">
-  <div class="col-md-10">
-    <div class="thumbnail thumbnail-position">
+  <div>
+    <div class="thumbnail">
       <div class="caption">
         <div class="row">
-          <div><img class="image-position" src="{{ownerAvatarUrl}}" alt="..."></div>
-          <div class="right-align"><h4>Info</h4></div>
-          <table class="right-align" style="width:70%">
-            <tr>
-              <td>Owner's login:</td>
-              <td>{{ownerLogin}}</td>
-            </tr>
-            <tr>
-              <td>Repository name:</td>
-              <td>{{repoName}}</td>
-            </tr>
-            <tr>
-              <td>Description:</td>
-              <td style="width:60%">{{repoDescription}}</td>
-            </tr>
-          </table>
+          <div class="col-md-2 visible-md"><img class="image-position" src="{{Repo.owner.avatar_url}}" alt="..."></div>
+          <div class="col-md-2 col-md-offset-1"><h4>Info</h4></div>
+          <label class="col-md-2 col-md-offset-5">{{repoDate}}</label>
         </div>
-        <label class="date-position">{{repoDate}}</label>
-        <p><a href="#" class="btn btn-default button-position" role="button">Button</a></p>
+        <form class="form-horizontal">
+          <div class="form-group">
+            <div class="col-sm-2 col-md-offset-3">Owner's login:</div>
+            <div class="col-sm-7">
+              {{Repo.owner.login}}
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="col-sm-2 col-md-offset-3">Repository name:</div>
+            <div class="col-sm-7">
+              {{Repo.name}}
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="col-sm-2 col-md-offset-3">Description:</div>
+            <div class="col-sm-7">
+              {{Repo.description}}
+            </div>
+          </div>
+        </form>
+        <p><a href="#" class="show-repo-details" data-owner={{Repo.owner.login}} data-name={{Repo.name}}>Show
+          RepoInfo</a></p>
       </div>
     </div>
+  </div>
+</script>
+
+<!--tableRepoDetails-template-->
+<script id="tableRepoDetails-template" type="text/x-handlebars-template">
+  <div>
+    <form class="form-horizontal">
+      <div class="form-group">
+        <div class="col-sm-2 col-md-offset-3">Id:</div>
+        <div class="col-sm-7">
+          {{Repo.id}}
+        </div>
+      </div>
+      <div class="form-group">
+        <div class="col-sm-2 col-md-offset-3">Size:</div>
+        <div class="col-sm-7">
+          {{Repo.size}}
+        </div>
+      </div>
+      <div class="form-group">
+        <div class="col-sm-2 col-md-offset-3">Language:</div>
+        <div class="col-sm-7">
+          {{Repo.language}}
+        </div>
+      </div>
+      <div class="form-group">
+        <div class="col-sm-2 col-md-offset-3">Forks:</div>
+        <div class="col-sm-7">
+          {{Repo.forks}}
+        </div>
+      </div>
+    </form>
   </div>
 </script>
 
