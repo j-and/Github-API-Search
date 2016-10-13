@@ -8,7 +8,7 @@
     module.getRepoDetails = getRepoDetails;
 
     function requestRepos(searchTerm) {
-      var url = BASE_URL + "search/repositories?q=" + searchTerm + "+language:javascript&sort=stars&order=desc";
+      var url = BASE_URL + "search/repositories?q=" + encodeURIComponent(searchTerm) + "+language:javascript&sort=stars&order=desc";
       var x = new XMLHttpRequest();
       return new Promise(function (resolve, reject) {
         x.onload = function () {
@@ -41,7 +41,7 @@
     }
 
     function getRepoDetails(owner, name) {
-      var url = BASE_URL + "repos/" + owner + "/" + name;
+      var url = BASE_URL + "repos/" + encodeURIComponent(owner) + "/" + encodeURIComponent(name);
       console.log(url);
            var x = new XMLHttpRequest();
             return new Promise(function (resolve, reject) {

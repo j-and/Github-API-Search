@@ -8,14 +8,15 @@
   var template;
   var modalBody;
   var myModal;
-
-  //document.addEventListener("DOMContentLoaded", init, event);
+  var buttonCloseModal;
 
   function init() {
     modalBody = document.getElementById("modalBody");
     myModal = document.getElementById("myModal");
+    buttonCloseModal = document.getElementById("buttonCloseModal");
     var source = document.getElementById("tableRepoDetails-template").innerHTML;
     template = Handlebars.compile(source);
+    buttonCloseModal.addEventListener("click", hideModal);
   }
 
   function showRepoDetails(owner, name) {
@@ -27,12 +28,17 @@
           repo: repo.toRawObject(),
         };
         modalBody.innerHTML = template(context);
-        window.location.hash = "query=" + searchTerm.value+"&owner=" + owner + "&name=" + name;
-        GAE.utils.setParamsFromUrl();
-
+        GAE.utils.setParamsToUrl({
+          name: name,
+          owner: owner,
+        });
       })
   }
 
+  function hideModal() {
+    console.log("aaa");
+    window.location.hash = "query=" + searchTerm.value;
+  }
 
 })();
 

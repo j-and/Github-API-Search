@@ -12,6 +12,7 @@
   function init() {
     inputForm = document.getElementById("inputForm");
     buttonSearch = document.getElementById("buttonSearch");
+
     searchTerm = document.getElementById("searchTerm");
     loading = document.getElementById("loading");
     RepoList = document.getElementById("list");
@@ -21,28 +22,28 @@
     inputForm.addEventListener("submit", enterSearchTerm);
     buttonSearch.addEventListener("click", clearList);
 
+
     GAE.modal.init();
 
     template = Handlebars.compile(source);
 
-    $(list).on("click", "a", function () {
+    $(list).on("click", "a.show-repo-details", function (event) {
+      event.preventDefault();
+
       var data = this.dataset;
       GAE.modal.showRepoDetails(data.owner, data.name);
     });
 
     var params = GAE.utils.getParamsFromUrl();
-    console.log("params", params);
+    //console.log("params", params);
 
     if (params.query) {
-      loadRepoListFrom();
+      searchTerm.value = params.query;
+      loadRepoList();
     }
     if (params.owner && params.name) {
-      //loadRepoListFromUrl(params.query);
       GAE.modal.showRepoDetails(params.owner, params.name);
     }
-    // else {
-    //   loadRepoListFromUrl(params.query);
-    // }
   }
 
   function enterSearchTerm(event) {
@@ -52,6 +53,9 @@
 
   function loadRepoList() {
     message.innerHTML = "Loading...";
+    GAE.utils.setParamsToUrl({
+      query: searchTerm.value,
+    });
     GAE.services.requestRepos(searchTerm.value)
       .then(
         function success(repos) {
@@ -80,24 +84,17 @@
       listContent += template(context);
     });
     list.innerHTML = listContent;
-    window.location.hash = "query=" + searchTerm.value;
-   // GAE.utils.setParamsFromUrl();
+
   }
 
-   function clearPage() {
+  function clearPage() {
     searchTerm.value = "";
-    GAE.utils.setParamsFromUrl("");
-      clearList();
     window.location.hash = "";
+    clearList();
   }
 
   function clearList() {
     RepoList.innerHTML = '';
-  }
-
-  function loadRepoListFromUrl(query) {
-    searchTerm.value = query;
-    loadRepoList();
   }
 
 })();
