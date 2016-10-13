@@ -4,35 +4,142 @@
   <meta charset="utf-8">
   <meta http-equiv="x-ua-compatible" content="ie=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css"
-        integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+  <!--<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css"
+        integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">-->
+
+  <!-- Latest compiled and minified CSS -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+        integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
   <title>Git API Search</title>
   <link rel="stylesheet" href="styles.css">
 </head>
 
+<body>
+<div class="page-header">
+  <h1 class="col-md-offset-1">Git API Search </h1>
+</div>
 
-<h1 id="title" class="start-title">Git API Search</h1>
 <div class="container">
-  <div class="row">
-    <form id="inputForm" class="form-inline start-input">
-      <div class="form-group">
+  <form id="inputForm" class="start-input">
+    <div id="inputRow" class="row row-position">
+      <!--<span id="loading" class="loading-position"></span>-->
+                  <span class="input-group col-md-8 col-md-offset-2">
         <input type="text" class="form-control" id="searchTerm" placeholder="Type name of repository" autofocus required
                minlength="3">
-        <button id="buttonSearch" type="submit" class="btn btn-default">Search</button>
-      </div>
-    </form>
+        <span id="spanButtonSearch" class="input-group-btn"><button id="buttonSearch" type="submit"
+                                                                    class="btn btn-default">Search</button></span>
+      </span>
+      <div class="col-md-offset-2" id="message"></div>
+    </div>
+
+  </form>
+  <div>
+    <ul id="list" class="col-md-12">
+    </ul>
   </div>
 </div>
-<div id="loading"></div>
-<div>
-  <ul id="list" class="col-md-6">
-  </ul>
+
+<!-- Modal -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+          aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">Information about repository</h4>
+      </div>
+
+      <div class="modal-body" id="modalBody">
+        Loading...
+      </div>
+
+      <div class="modal-footer">
+        <button id="buttonCloseModal" type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
 </div>
 
+<script type="text/javascript"
+        src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.5/handlebars.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.js"></script>
+<script type="text/javascript"
+        src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0-alpha/js/bootstrap.js"></script>
 
 <script src="./app.js"></script>
 <script src="./httpService.js"></script>
 <script src="./repoModel.js"></script>
+<script src="./repoDetails.js"></script>
+<script src="./utils.js"></script>
+
+<!--block-template-->
+<script id="block-template" type="text/x-handlebars-template">
+  <div>
+    <div class="thumbnail">
+      <div class="caption">
+        <div class="row">
+          <div class="col-md-2 visible-md visible-lg"><img class="image-position" src="{{repo.avatarUrl}}" alt="..."></div>
+          <div class="col-md-2 col-md-offset-1"><h4>Info</h4></div>
+          <label class="col-md-2 col-md-offset-5">{{repoDate}}</label>
+        </div>
+        <form class="form-horizontal">
+          <div class="form-group">
+            <div class="col-sm-2 col-md-offset-3">Owner's login:</div>
+            <div class="col-sm-7">
+              {{repo.owner}}
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="col-sm-2 col-md-offset-3">Repository name:</div>
+            <div class="col-sm-7">
+              {{repo.name}}
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="col-sm-2 col-md-offset-3">Description:</div>
+            <div class="col-sm-7">
+              {{repo.description}}
+            </div>
+          </div>
+        </form>
+        <p><a href="#" class="show-repo-details" data-owner={{repo.owner}} data-name={{repo.name}}>Show
+          RepoInfo</a></p>
+      </div>
+    </div>
+  </div>
+</script>
+
+<!--tableRepoDetails-template-->
+<script id="tableRepoDetails-template" type="text/x-handlebars-template">
+  <div>
+    <form class="form-horizontal">
+      <div class="form-group">
+        <div class="col-sm-2 col-md-offset-3">Id:</div>
+        <div class="col-sm-7">
+          {{repo.id}}
+        </div>
+      </div>
+      <div class="form-group">
+        <div class="col-sm-2 col-md-offset-3">Size:</div>
+        <div class="col-sm-7">
+          {{repo.size}}
+        </div>
+      </div>
+      <div class="form-group">
+        <div class="col-sm-2 col-md-offset-3">Language:</div>
+        <div class="col-sm-7">
+          {{repo.language}}
+        </div>
+      </div>
+      <div class="form-group">
+        <div class="col-sm-2 col-md-offset-3">Forks:</div>
+        <div class="col-sm-7">
+          {{repo.forks}}
+        </div>
+      </div>
+    </form>
+  </div>
+</script>
 
 </body>
 
