@@ -8,7 +8,7 @@
     module.getRepoDetails = getRepoDetails;
 
     function requestRepos(searchTerm) {
-      var url = BASE_URL + "search/repositories?q=" + searchTerm.value + "+language:javascript&sort=stars&order=desc";
+      var url = BASE_URL + "search/repositories?q=" + searchTerm + "+language:javascript&sort=stars&order=desc";
       var x = new XMLHttpRequest();
       return new Promise(function (resolve, reject) {
         x.onload = function () {
@@ -42,19 +42,20 @@
 
     function getRepoDetails(owner, name) {
       var url = BASE_URL + "repos/" + owner + "/" + name;
+      console.log(url);
            var x = new XMLHttpRequest();
             return new Promise(function (resolve, reject) {
           x.onload = function () {
             if (this.status == 200) {
             var repoDetails = JSON.parse(x.responseText);
-            resolve(repoDetails);
+             resolve(new GAE.model.Repo(repoDetails));
 
           } else{
               var error = new Error(this.statusText);
               error.code = this.status;
               reject(error);
             }
-          }
+          };
         x.onerror = function () {
           reject("HTTP request is failed");
         };

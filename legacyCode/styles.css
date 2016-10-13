@@ -1,6 +1,9 @@
 .start-input {
-  position: absolute;
-  top: 50%;
+  margin-top: 15%;
+ }
+
+.input {
+  margin-bottom: 20px;
 }
 
 .loader {
@@ -22,9 +25,8 @@
 }
 
 .image-position {
-  position: absolute;
-  top: 10px;
-  left: 25px;
+  margin-top: 10px;
+  margin-left: 25px;
   height: 100px;
   width: 100px;
 }

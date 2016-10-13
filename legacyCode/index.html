@@ -22,15 +22,16 @@
 <div class="container">
   <form id="inputForm" class="start-input">
     <div id="inputRow" class="row row-position">
-      <span id="loading" class="loading-position"></span>
-            <span class="input-group col-md-8 col-md-offset-2">
+      <!--<span id="loading" class="loading-position"></span>-->
+                  <span class="input-group col-md-8 col-md-offset-2">
         <input type="text" class="form-control" id="searchTerm" placeholder="Type name of repository" autofocus required
                minlength="3">
         <span id="spanButtonSearch" class="input-group-btn"><button id="buttonSearch" type="submit"
                                                                     class="btn btn-default">Search</button></span>
       </span>
-      <span class="col-md-offset-2" id="message"></span>
+      <div class="col-md-offset-2" id="message"></div>
     </div>
+
   </form>
   <div>
     <ul id="list" class="col-md-12">
@@ -69,6 +70,7 @@
 <script src="./httpService.js"></script>
 <script src="./repoModel.js"></script>
 <script src="./repoDetails.js"></script>
+<script src="./utils.js"></script>
 
 <!--block-template-->
 <script id="block-template" type="text/x-handlebars-template">
@@ -76,7 +78,7 @@
     <div class="thumbnail">
       <div class="caption">
         <div class="row">
-          <div class="col-md-2 visible-md"><img class="image-position" src="{{Repo.owner.avatar_url}}" alt="..."></div>
+          <div class="col-md-2 visible-md visible-lg"><img class="image-position" src="{{repo.avatarUrl}}" alt="..."></div>
           <div class="col-md-2 col-md-offset-1"><h4>Info</h4></div>
           <label class="col-md-2 col-md-offset-5">{{repoDate}}</label>
         </div>
@@ -84,23 +86,23 @@
           <div class="form-group">
             <div class="col-sm-2 col-md-offset-3">Owner's login:</div>
             <div class="col-sm-7">
-              {{Repo.owner.login}}
+              {{repo.owner}}
             </div>
           </div>
           <div class="form-group">
             <div class="col-sm-2 col-md-offset-3">Repository name:</div>
             <div class="col-sm-7">
-              {{Repo.name}}
+              {{repo.name}}
             </div>
           </div>
           <div class="form-group">
             <div class="col-sm-2 col-md-offset-3">Description:</div>
             <div class="col-sm-7">
-              {{Repo.description}}
+              {{repo.description}}
             </div>
           </div>
         </form>
-        <p><a href="#" class="show-repo-details" data-owner={{Repo.owner.login}} data-name={{Repo.name}}>Show
+        <p><a href="#{{url}}" class="show-repo-details" data-owner={{repo.owner}} data-name={{repo.name}}>Show
           RepoInfo</a></p>
       </div>
     </div>
@@ -114,25 +116,25 @@
       <div class="form-group">
         <div class="col-sm-2 col-md-offset-3">Id:</div>
         <div class="col-sm-7">
-          {{Repo.id}}
+          {{repo.id}}
         </div>
       </div>
       <div class="form-group">
         <div class="col-sm-2 col-md-offset-3">Size:</div>
         <div class="col-sm-7">
-          {{Repo.size}}
+          {{repo.size}}
         </div>
       </div>
       <div class="form-group">
         <div class="col-sm-2 col-md-offset-3">Language:</div>
         <div class="col-sm-7">
-          {{Repo.language}}
+          {{repo.language}}
         </div>
       </div>
       <div class="form-group">
         <div class="col-sm-2 col-md-offset-3">Forks:</div>
         <div class="col-sm-7">
-          {{Repo.forks}}
+          {{repo.forks}}
         </div>
       </div>
     </form>
