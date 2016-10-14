@@ -36,10 +36,9 @@
   }
 
   function hideModal() {
-    console.log("aaa");
     GAE.utils.setParamsToUrl({
-      name: "",
-      owner: ""
+      name: null,
+      owner: null
     });
   }
 

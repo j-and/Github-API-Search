@@ -25,7 +25,7 @@
     var urlArray = [];
     var str;
     for (var key in resultParams) {
-      if (resultParams[key] != "") {
+      if (resultParams[key]) {
         str = key + "=" + resultParams[key];
         urlArray.push(str);
       }
