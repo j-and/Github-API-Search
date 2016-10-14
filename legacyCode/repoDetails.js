@@ -37,7 +37,10 @@
 
   function hideModal() {
     console.log("aaa");
-    window.location.hash = "query=" + searchTerm.value;
+    GAE.utils.setParamsToUrl({
+      name: "",
+      owner: ""
+    });
   }
 
 })();

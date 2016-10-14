@@ -1,7 +1,7 @@
 (function () {
 
   var inputForm;
-  var RepoList;
+  var list;
   var template;
   var buttonSearch;
   var searchTerm;
@@ -15,7 +15,7 @@
 
     searchTerm = document.getElementById("searchTerm");
     loading = document.getElementById("loading");
-    RepoList = document.getElementById("list");
+    list = document.getElementById("list");
     message = document.getElementById("message");
     var source = document.getElementById("block-template").innerHTML;
     searchTerm.addEventListener("click", clearPage);
@@ -94,7 +94,7 @@
   }
 
   function clearList() {
-    RepoList.innerHTML = '';
+    list.innerHTML = '';
   }
 
 })();

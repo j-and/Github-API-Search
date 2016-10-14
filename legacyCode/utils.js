@@ -25,8 +25,10 @@
     var urlArray = [];
     var str;
     for (var key in resultParams) {
-      str = key + "=" + resultParams[key];
-      urlArray.push(str);
+      if (resultParams[key] != "") {
+        str = key + "=" + resultParams[key];
+        urlArray.push(str);
+      }
     }
     window.location.hash = urlArray.join('&');
   }
