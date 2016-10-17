@@ -2,44 +2,54 @@
 
   var inputForm;
   var list;
-  var template;
+  var templateBlock;
   var buttonSearch;
   var searchTerm;
   var loading;
   var message;
-  document.addEventListener("DOMContentLoaded", init, event);
+  var buttonNext;
+  var buttonPrevious;
+  var currentPage = 1;
+  var pagination;
+  var pageElement;
+  $(document).on("DOMContentLoaded", init, event );
 
   function init() {
-    inputForm = document.getElementById("inputForm");
-    buttonSearch = document.getElementById("buttonSearch");
-
-    searchTerm = document.getElementById("searchTerm");
-    loading = document.getElementById("loading");
-    list = document.getElementById("list");
-    message = document.getElementById("message");
-    var source = document.getElementById("block-template").innerHTML;
-    searchTerm.addEventListener("click", clearPage);
-    inputForm.addEventListener("submit", enterSearchTerm);
-    buttonSearch.addEventListener("click", clearList);
-
+    inputForm = $('#inputForm')[0];
+    buttonSearch = $('#buttonSearch')[0];
+    buttonNext = $('#buttonNext')[0];
+    buttonPrevious = $('#buttonPrevious')[0];
+    pagination = $('#pagination')[0];
+    pageElement = $('#pageElement')[0];
+    searchTerm = $('#searchTerm')[0];
+    loading = $('#loading')[0];
+    list = $('#list')[0];
+    message = $('#message')[0];
+    var sourceBlock = $('#block-template').html();
+    $(inputForm).on("submit", enterSearchTerm);
+    $(buttonSearch).on("click", clearList);
+    $(buttonPrevious).on("click", goToPreviousPage);
+    $(buttonNext).on("click", goToNextPage);
+    $(searchTerm).on("click", clearPage);
 
     GAE.modal.init();
 
-    template = Handlebars.compile(source);
+    templateBlock = Handlebars.compile(sourceBlock);
 
     $(list).on("click", "a.show-repo-details", function (event) {
       event.preventDefault();
-
       var data = this.dataset;
       GAE.modal.showRepoDetails(data.owner, data.name);
     });
 
     var params = GAE.utils.getParamsFromUrl();
     //console.log("params", params);
-
     if (params.query) {
       searchTerm.value = params.query;
-      loadRepoList();
+      if (params.page) {
+        currentPage = (+params.page) || 1;
+      }
+      loadRepoList(params.page);
     }
     if (params.owner && params.name) {
       GAE.modal.showRepoDetails(params.owner, params.name);
@@ -52,49 +62,91 @@
   }
 
   function loadRepoList() {
-    message.innerHTML = "Loading...";
+    $(message).html("Loading...");
     GAE.utils.setParamsToUrl({
       query: searchTerm.value,
+      page: currentPage
     });
-    GAE.services.requestRepos(searchTerm.value)
+    GAE.services.requestRepos(searchTerm.value, currentPage)
       .then(
-        function success(repos) {
-          showRepoList(repos);
-          message.innerHTML = "";
-          if (repos.length == 0) {
-            message.innerText = "No repositories is found";
+        function success(obj) {
+          showRepoList(obj);
+          if (!obj) {
+            $(message).html("No repositories is found");
+            $(pagination).addClass("hidden");
           }
-          inputForm.removeAttribute("class", "start-input");
-          inputForm.setAttribute("class", "input");
+          else {
+            $(message).html("");
+          }
+          if (currentPage <= 1) {
+            $(buttonPrevious).addClass("disabled");
+          }
+          if (currentPage >= 2) {
+            $(buttonPrevious).removeClass("disabled")
+          }
+          if (currentPage >= obj.pagesCount) {
+            $(buttonNext).addClass("disabled");
+          }
+          if (currentPage < obj.pagesCount) {
+            $(buttonNext).removeClass("hidden");
+          }
+          $(inputForm).removeClass("start-input");
+          $(inputForm).addClass("input");
         },
         function error() {
-          message.innerText = "Enter correct name";
+          $(message).html("Enter correct name");
         }
       );
   }
 
-  function showRepoList(repos) {
+  function showRepoList(obj) {
     var listContent = "";
+    var repos = obj.repos;
     repos.forEach(function (repo) {
       var date = new Date(repo.updatedAt);
       var context = {
         repo: repo.toRawObject(),
         repoDate: date.toLocaleDateString() + " " + date.getHours() + ":" + date.getMinutes(),
       };
-      listContent += template(context);
+      listContent += templateBlock(context);
     });
-    list.innerHTML = listContent;
-
+    $(list).html(listContent);
+    $(pagination).removeClass("hidden");
   }
 
   function clearPage() {
+    $(pagination).addClass("hidden");
+    clearList();
     searchTerm.value = "";
     window.location.hash = "";
-    clearList();
   }
 
   function clearList() {
-    list.innerHTML = '';
+    $(list).html("");
+  }
+
+  function goToPreviousPage(event) {
+    event.preventDefault();
+    if (searchTerm.value && (currentPage > 1)) {
+      currentPage--;
+      loadRepoList();
+      setPage();
+      $(buttonNext).removeClass("hidden");
+    }
+  }
+
+  function setPage() {
+    $(pageElement).html(currentPage);
+  }
+
+  function goToNextPage(event) {
+    event.preventDefault();
+    if (searchTerm.value) {
+      var pageContent = "";
+      currentPage++;
+      loadRepoList(currentPage);
+      setPage(currentPage);
+    }
   }
 
 })();

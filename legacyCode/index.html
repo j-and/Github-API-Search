@@ -23,7 +23,7 @@
   <form id="inputForm" class="start-input">
     <div id="inputRow" class="row row-position">
       <!--<span id="loading" class="loading-position"></span>-->
-                  <span class="input-group col-md-8 col-md-offset-2">
+      <span class="input-group col-md-8 col-md-offset-2">
         <input type="text" class="form-control" id="searchTerm" placeholder="Type name of repository" autofocus required
                minlength="3">
         <span id="spanButtonSearch" class="input-group-btn"><button id="buttonSearch" type="submit"
@@ -38,6 +38,16 @@
     </ul>
   </div>
 </div>
+
+
+<nav aria-label="..." id="pagination" class="hidden" align="center">
+  <ul class="pagination">
+    <li id="buttonPrevious" class="disabled"><a href="#" aria-label="Previous"><span
+      aria-hidden="true">&laquo</span></a></li>
+    <li class="active"><span id="pageElement" href="#">1</span></li>
+    <li id="buttonNext"><a href="#" aria-label="Next"><span aria-hidden="true">&raquo</span></a></li>
+  </ul>
+</nav>
 
 <!-- Modal -->
 <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
@@ -78,7 +88,8 @@
     <div class="thumbnail">
       <div class="caption">
         <div class="row">
-          <div class="col-md-2 visible-md visible-lg"><img class="image-position" src="{{repo.avatarUrl}}" alt="..."></div>
+          <div class="col-md-2 visible-md visible-lg"><img class="image-position" src="{{repo.avatarUrl}}" alt="...">
+          </div>
           <div class="col-md-2 col-md-offset-1"><h4>Info</h4></div>
           <label class="col-md-2 col-md-offset-5">{{repoDate}}</label>
         </div>

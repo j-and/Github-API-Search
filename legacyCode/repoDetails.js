@@ -11,12 +11,12 @@
   var buttonCloseModal;
 
   function init() {
-    modalBody = document.getElementById("modalBody");
-    myModal = document.getElementById("myModal");
-    buttonCloseModal = document.getElementById("buttonCloseModal");
-    var source = document.getElementById("tableRepoDetails-template").innerHTML;
+    modalBody = $('#modalBody')[0];
+    myModal = $('#myModal')[0];
+    buttonCloseModal = $('#buttonCloseModal')[0];
+    var source = $('#tableRepoDetails-template').html();
     template = Handlebars.compile(source);
-    buttonCloseModal.addEventListener("click", hideModal);
+    $(buttonCloseModal).on("click", hideModal);
   }
 
   function showRepoDetails(owner, name) {
@@ -27,7 +27,7 @@
         var context = {
           repo: repo.toRawObject(),
         };
-        modalBody.innerHTML = template(context);
+        $(modalBody).html(template(context));
         GAE.utils.setParamsToUrl({
           name: name,
           owner: owner,

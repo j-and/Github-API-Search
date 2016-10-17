@@ -30,11 +30,11 @@
 
   Repo.prototype.getUrl = function () {
     return this.url;
-  }
+  };
 
   Repo.prototype.getDescription = function () {
     return this.description;
-  }
+  };
 
   Repo.prototype.getUpdatedAt = function () {
     return this.updatedAt;
@@ -54,22 +54,22 @@
 
   Repo.prototype.getForks = function () {
     return this.forks;
-      }
-
-Repo.prototype.toRawObject=function () {
-  return {
-    name:this.getName(),
-    owner:this.getOwner(),
-    avatarUrl:this.getAvatar(),
-    url:this.getUrl(),
-    description:this.getDescription(),
-    updatedAt:this.getUpdatedAt(),
-    id:this.getId(),
-    size:this.getSize(),
-    language:this.getLanguage(),
-    forks:this.getForks(),
-
   };
+
+  Repo.prototype.toRawObject = function () {
+    return {
+      name: this.getName(),
+      owner: this.getOwner(),
+      avatarUrl: this.getAvatar(),
+      url: this.getUrl(),
+      description: this.getDescription(),
+      updatedAt: this.getUpdatedAt(),
+      id: this.getId(),
+      size: this.getSize(),
+      language: this.getLanguage(),
+      forks: this.getForks(),
+
+    };
   }
 
 })();
