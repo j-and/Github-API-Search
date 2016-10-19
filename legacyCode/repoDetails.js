@@ -11,23 +11,22 @@
   var buttonCloseModal;
 
   function init() {
-    modalBody = $('#modalBody')[0];
-    myModal = $('#myModal')[0];
-    buttonCloseModal = $('#buttonCloseModal')[0];
+    modalBody = $('#modalBody');
+    myModal = $('#myModal');
+    buttonCloseModal = $('#buttonCloseModal');
     var source = $('#tableRepoDetails-template').html();
     template = Handlebars.compile(source);
-    $(buttonCloseModal).on("click", hideModal);
   }
 
   function showRepoDetails(owner, name) {
-    $(myModal).modal('show');
+    myModal.modal('show');
     GAE.services.getRepoDetails(owner, name)
       .then(function (repo) {
         //console.log(repo)
         var context = {
           repo: repo.toRawObject(),
         };
-        $(modalBody).html(template(context));
+        modalBody.html(template(context));
         GAE.utils.setParamsToUrl({
           name: name,
           owner: owner,

@@ -10,33 +10,39 @@
   var buttonNext;
   var buttonPrevious;
   var currentPage = 1;
+  var pageContent;
   var pagination;
   var pageElement;
-  $(document).on("DOMContentLoaded", init, event );
+  $(document).on("DOMContentLoaded", init, event);
+
+  var overlay;
+
 
   function init() {
-    inputForm = $('#inputForm')[0];
-    buttonSearch = $('#buttonSearch')[0];
-    buttonNext = $('#buttonNext')[0];
-    buttonPrevious = $('#buttonPrevious')[0];
-    pagination = $('#pagination')[0];
-    pageElement = $('#pageElement')[0];
-    searchTerm = $('#searchTerm')[0];
-    loading = $('#loading')[0];
-    list = $('#list')[0];
-    message = $('#message')[0];
+    inputForm = $('#inputForm');
+    buttonSearch = $('#buttonSearch');
+    buttonNext = $('#buttonNext');
+    buttonPrevious = $('#buttonPrevious');
+    pagination = $('#pagination');
+    pageElement = $('#pageElement');
+    searchTerm = $('#searchTerm');
+    loading = $('#loading');
+    list = $('#list');
+    message = $('#message');
     var sourceBlock = $('#block-template').html();
-    $(inputForm).on("submit", enterSearchTerm);
-    $(buttonSearch).on("click", clearList);
-    $(buttonPrevious).on("click", goToPreviousPage);
-    $(buttonNext).on("click", goToNextPage);
-    $(searchTerm).on("click", clearPage);
+    inputForm.on("submit", enterSearchTerm);
+    buttonSearch.on("click", clearList);
+    buttonPrevious.on("click", goToPreviousPage);
+    buttonNext.on("click", goToNextPage);
+    searchTerm.on("click", clearPage);
+    totalCount = $('#totalCount');
+    totalCountLabel = $('#totalCountLabel');
+    overlay = $('#overlay');
 
     GAE.modal.init();
 
     templateBlock = Handlebars.compile(sourceBlock);
-
-    $(list).on("click", "a.show-repo-details", function (event) {
+    list.on("click", "a.show-repo-details", function (event) {
       event.preventDefault();
       var data = this.dataset;
       GAE.modal.showRepoDetails(data.owner, data.name);
@@ -45,7 +51,7 @@
     var params = GAE.utils.getParamsFromUrl();
     //console.log("params", params);
     if (params.query) {
-      searchTerm.value = params.query;
+      searchTerm.val(params.query);
       if (params.page) {
         currentPage = (+params.page) || 1;
       }
@@ -62,39 +68,46 @@
   }
 
   function loadRepoList() {
-    $(message).html("Loading...");
+    message.html("Loading...");
+    showBackground();
+
     GAE.utils.setParamsToUrl({
-      query: searchTerm.value,
+      query: searchTerm.val(),
       page: currentPage
     });
-    GAE.services.requestRepos(searchTerm.value, currentPage)
+    GAE.services.requestRepos(searchTerm.val(), currentPage)
       .then(
         function success(obj) {
           showRepoList(obj);
-          if (!obj) {
-            $(message).html("No repositories is found");
-            $(pagination).addClass("hidden");
+          if (obj['repos'].length == 0) {
+            message.html("No repositories is found");
+            pagination.addClass("hidden");
           }
           else {
-            $(message).html("");
+            message.html("");
+            hideBackground();
+            totalCountLabel.html("Total Count");
+            totalCount.html(obj['pagesCount']);
           }
           if (currentPage <= 1) {
-            $(buttonPrevious).addClass("disabled");
+            buttonPrevious.addClass("disabled");
           }
           if (currentPage >= 2) {
-            $(buttonPrevious).removeClass("disabled")
+            buttonPrevious.removeClass("disabled")
           }
           if (currentPage >= obj.pagesCount) {
-            $(buttonNext).addClass("disabled");
+            buttonNext.addClass("disabled");
           }
-          if (currentPage < obj.pagesCount) {
-            $(buttonNext).removeClass("hidden");
+          else {
+            buttonNext.removeClass("disabled");
           }
-          $(inputForm).removeClass("start-input");
-          $(inputForm).addClass("input");
+          inputForm.removeClass("start-input");
+          inputForm.addClass("input");
+          setPage(currentPage);
+
         },
         function error() {
-          $(message).html("Enter correct name");
+          message.html("Enter correct name");
         }
       );
   }
@@ -110,44 +123,59 @@
       };
       listContent += templateBlock(context);
     });
-    $(list).html(listContent);
-    $(pagination).removeClass("hidden");
+    list.html(listContent);
+    pagination.removeClass("hidden");
+    hideBackground();
   }
 
   function clearPage() {
-    $(pagination).addClass("hidden");
+    pagination.addClass("hidden");
     clearList();
-    searchTerm.value = "";
+    searchTerm.val("");
     window.location.hash = "";
+    totalCountLabel.html("");
+    totalCount.html("");
   }
 
   function clearList() {
-    $(list).html("");
+    list.html("");
   }
 
   function goToPreviousPage(event) {
     event.preventDefault();
-    if (searchTerm.value && (currentPage > 1)) {
+    if (searchTerm.val() && (currentPage > 1)) {
       currentPage--;
-      loadRepoList();
-      setPage();
-      $(buttonNext).removeClass("hidden");
+      loadRepoList(currentPage);
+      buttonNext.removeClass("disabled");
+      scroll(0, 0);
+      return false;
     }
   }
 
-  function setPage() {
-    $(pageElement).html(currentPage);
+  function setPage(currentPage) {
+    pageElement.html(currentPage);
   }
 
   function goToNextPage(event) {
     event.preventDefault();
-    if (searchTerm.value) {
-      var pageContent = "";
+    if (searchTerm.val()) {
+      pageContent = "";
       currentPage++;
       loadRepoList(currentPage);
-      setPage(currentPage);
+      scroll(0, 0);
+      return false;
     }
   }
 
-})();
+  function hideBackground() {
+    overlay.removeClass("background-window");
+  }
+
+
+  function showBackground() {
+    overlay.addClass("background-window");
+  }
+
+})
+();
 

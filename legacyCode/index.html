@@ -34,20 +34,26 @@
 
   </form>
   <div>
-    <ul id="list" class="col-md-12">
-    </ul>
+    <div id="list" class="col-md-12">
+    </div>
   </div>
 </div>
 
-
-<nav aria-label="..." id="pagination" class="hidden" align="center">
-  <ul class="pagination">
-    <li id="buttonPrevious" class="disabled"><a href="#" aria-label="Previous"><span
-      aria-hidden="true">&laquo</span></a></li>
-    <li class="active"><span id="pageElement" href="#">1</span></li>
-    <li id="buttonNext"><a href="#" aria-label="Next"><span aria-hidden="true">&raquo</span></a></li>
-  </ul>
-</nav>
+<div class="row">
+  <div class="col-md-2 col-md-offset-5">
+    <nav aria-label="..." id="pagination" class="hidden">
+      <ul class="pagination">
+        <li id="buttonPrevious" class="disabled"><a href="#" aria-label="Previous"><span
+          aria-hidden="true">&laquo</span></a></li>
+        <li class="active"><span id="pageElement" href="#">1</span></li>
+        <li id="buttonNext"><a href="#" aria-label="Next"><span aria-hidden="true">&raquo</span></a></li>
+      </ul>
+    </nav>
+  </div>
+  <div div class="col-md-2 col-md-offset-3">
+    <label id="totalCountLabel" class="label label-primary"></label><span id="totalCount"></span>
+  </div>
+</div>
 
 <!-- Modal -->
 <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
@@ -153,7 +159,8 @@
 </script>
 
 </body>
-
+<!--Overlay-->
+<div id='overlay'></div>
 </html>
 
 
