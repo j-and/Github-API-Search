@@ -116,11 +116,13 @@
     var listContent = "";
     var repos = obj.repos;
     repos.forEach(function (repo) {
-      var date = new Date(repo.updatedAt);
       var context = {
-        repo: repo.toRawObject(),
-        repoDate: date.toLocaleDateString() + " " + date.getHours() + ":" + date.getMinutes(),
+        repo: repo.toRawObject()
       };
+      Handlebars.registerHelper('dateFormat', function (date) {
+        var date = new Date(repo.updatedAt);
+        return date.toLocaleDateString() + " " + date.getHours() + ":" + date.getMinutes();
+      })
       listContent += templateBlock(context);
     });
     list.html(listContent);
