@@ -20,8 +20,11 @@
 </div>
 
 <div class="container">
+  <!--Overlay-->
+  <div id='overlay'></div>
   <form id="inputForm" class="start-input">
-    <div id="inputRow" class="row row-position">
+    <div id="inputRow" class="row row-position" >
+
       <!--<span id="loading" class="loading-position"></span>-->
       <span class="input-group col-md-8 col-md-offset-2">
         <input type="text" class="form-control" id="searchTerm" placeholder="Type name of repository" autofocus required
@@ -35,6 +38,7 @@
   </form>
   <div>
     <div id="list" class="col-md-12">
+
     </div>
   </div>
 </div>
@@ -87,6 +91,7 @@
 <script src="./repoModel.js"></script>
 <script src="./repoDetails.js"></script>
 <script src="./utils.js"></script>
+<script src="./cacheService.js"></script>
 
 <!--block-template-->
 <script id="block-template" type="text/x-handlebars-template">
@@ -97,7 +102,7 @@
           <div class="col-md-2 visible-md visible-lg"><img class="image-position" src="{{repo.avatarUrl}}" alt="...">
           </div>
           <div class="col-md-2 col-md-offset-1"><h4>Info</h4></div>
-          <label class="col-md-2 col-md-offset-5">{{dateFormat date}}</label>
+          <label class="col-md-2 col-md-offset-5">{{dateFormat repo.updatedAt}}</label>
         </div>
         <form class="form-horizontal">
           <div class="form-group">
@@ -159,8 +164,8 @@
 </script>
 
 </body>
-<!--Overlay-->
-<div id='overlay'></div>
+<!--Overlay
+<div id='overlay' class="col-md-8"></div>-->
 </html>
 
 

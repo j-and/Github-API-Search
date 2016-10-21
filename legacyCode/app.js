@@ -40,8 +40,13 @@
     overlay = $('#overlay');
 
     GAE.modal.init();
-
     templateBlock = Handlebars.compile(sourceBlock);
+
+    Handlebars.registerHelper('dateFormat', function (date) {
+      return date.toLocaleDateString() + " " + date.getHours() + ":" + date.getMinutes();
+    });
+
+
     list.on("click", "a.show-repo-details", function (event) {
       event.preventDefault();
       var data = this.dataset;
@@ -60,6 +65,11 @@
     if (params.owner && params.name) {
       GAE.modal.showRepoDetails(params.owner, params.name);
     }
+
+
+
+
+
   }
 
   function enterSearchTerm(event) {
@@ -119,16 +129,15 @@
       var context = {
         repo: repo.toRawObject()
       };
-      Handlebars.registerHelper('dateFormat', function (date) {
-        var date = new Date(repo.updatedAt);
-        return date.toLocaleDateString() + " " + date.getHours() + ":" + date.getMinutes();
-      })
       listContent += templateBlock(context);
+
     });
+
     list.html(listContent);
     pagination.removeClass("hidden");
     hideBackground();
   }
+
 
   function clearPage() {
     pagination.addClass("hidden");

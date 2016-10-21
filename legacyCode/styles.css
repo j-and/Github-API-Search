@@ -40,11 +40,15 @@
 
 .background-window {
   height: 100%;
-  opacity: 0.4;
+  opacity: 0.2;
   position: absolute;
   top: 0;
   left: 0;
   background-color: black;
-  width: 100%;
+  width:100%;
+  z-index:10;
 }
 
+.container{
+  position:relative;
+}

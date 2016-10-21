@@ -9,7 +9,7 @@
     this.owner = items.owner;
     this.url = items.clone_url;
     this.description = items.description;
-    this.updatedAt = Date.parse(items.updated_at);
+    this.updatedAt = new Date(items.updated_at);
     this.id = items.id;
     this.size = items.size;
     this.language = items.language;

@@ -5,6 +5,7 @@
   module.showRepoDetails = showRepoDetails;
   module.init = init;
 
+
   var template;
   var modalBody;
   var myModal;
@@ -16,6 +17,7 @@
     buttonCloseModal = $('#buttonCloseModal');
     var source = $('#tableRepoDetails-template').html();
     template = Handlebars.compile(source);
+    buttonCloseModal.on("click", hideModal);
   }
 
   function showRepoDetails(owner, name) {
@@ -24,12 +26,12 @@
       .then(function (repo) {
         //console.log(repo)
         var context = {
-          repo: repo.toRawObject(),
+          repo: repo.toRawObject()
         };
         modalBody.html(template(context));
         GAE.utils.setParamsToUrl({
           name: name,
-          owner: owner,
+          owner: owner
         });
       })
   }

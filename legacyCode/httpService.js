@@ -9,7 +9,6 @@
   module.getRepoDetails = getRepoDetails;
   module.getPagesCount = getPagesCount;
 
-
   function requestRepos(searchTerm, page) {
     var url = BASE_URL + "search/repositories?q=" + encodeURIComponent(searchTerm) + "&page=" + page + "&per_page=" + per_page;
     var x = new XMLHttpRequest();
@@ -19,8 +18,6 @@
           var items = JSON.parse(x.responseText).items;
           //var response = x.responseText;
           var response = JSON.parse(x.responseText);
-
-
           var obj = {
             repos: parseItems(items),
             currentPage: page,
@@ -52,32 +49,37 @@
   }
 
   function getPagesCount(response) {
-
-    var pagesCount = Math.ceil(response.total_count / per_page);
-    return pagesCount;
+    return pagesCount = Math.ceil(response.total_count / per_page);
   }
 
   function getRepoDetails(owner, name) {
-    var url = BASE_URL + "repos/" + encodeURIComponent(owner) + "/" + encodeURIComponent(name);
-    var x = new XMLHttpRequest();
-    return new Promise(function (resolve, reject) {
-        x.onload = function () {
-          if (this.status == 200) {
-            var repoDetails = JSON.parse(x.responseText);
-            resolve(new GAE.model.Repo(repoDetails));
-
-          } else {
-            var error = new Error(this.statusText);
-            error.code = this.status;
-            reject(error);
-          }
-        };
-        x.onerror = function () {
-          reject("HTTP request is failed");
-        };
-        x.open('GET', url, true);
-        x.send()
-      }
-    )
-  }
+    var cachedRepo = GAE.cache.getReposFromCache(owner, name);
+    if (cachedRepo) {
+         return Promise.resolve(cachedRepo)
+    }
+    else {
+      var url = BASE_URL + "repos/" + encodeURIComponent(owner) + "/" + encodeURIComponent(name);
+      var x = new XMLHttpRequest();
+      return new Promise(function (resolve, reject) {
+          x.onload = function () {
+            if (this.status == 200) {
+              var repoDetails = JSON.parse(x.responseText);
+              var repoModel = new GAE.model.Repo(repoDetails);
+              GAE.cache.setReposToCache(repoModel);
+              resolve(repoModel);
+            } else {
+              var error = new Error(this.statusText);
+              error.code = this.status;
+              reject(error);
+            }
+          };
+          x.onerror = function () {
+            reject("HTTP request is failed");
+          };
+          x.open('GET', url, true);
+          x.send()
+        }
+      )
+    }
+ }
 })();
