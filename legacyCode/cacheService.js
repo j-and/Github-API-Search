@@ -9,18 +9,14 @@
 
   function getReposFromCache(owner, name) {
     var getKey = owner + '|' + name;
-    console.log("getKey", getKey);
-   // if (getKey == setKey) {
-      var cachedRepo = cache|| null;
-      console.log("cachedRepo", cachedRepo);
-   // }
-  }
+         return cache[getKey]||null;
 
+
+  }
   function setReposToCache(repoModel) {
     var setKey = repoModel.owner.login + '|' + repoModel.name;
-    console.log("setKey", setKey);
-    cache.setKey = repoModel;
-    console.log("cache", cache);
-  }
+       cache[setKey] = repoModel;
+    console.log("cache",cache)
+         }
 
 })();
