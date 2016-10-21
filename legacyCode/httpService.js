@@ -15,15 +15,15 @@
     return new Promise(function (resolve, reject) {
       x.onload = function () {
         if (this.status == 200) {
-          var items = JSON.parse(x.responseText).items;
-          //var response = x.responseText;
           var response = JSON.parse(x.responseText);
+          var items = response.items;
           var obj = {
             repos: parseItems(items),
             currentPage: page,
             pagesCount: getPagesCount(response)
           };
           resolve(obj);
+          return(response)
         } else {
           var error = new Error(this.statusText);
           error.code = this.status;
@@ -49,13 +49,13 @@
   }
 
   function getPagesCount(response) {
-    return pagesCount = Math.ceil(response.total_count / per_page);
+    return Math.ceil(response.total_count / per_page);
   }
 
   function getRepoDetails(owner, name) {
     var cachedRepo = GAE.cache.getReposFromCache(owner, name);
     if (cachedRepo) {
-         return Promise.resolve(cachedRepo)
+         return Promise.resolve(new GAE.model.Repo(cachedRepo))
     }
     else {
       var url = BASE_URL + "repos/" + encodeURIComponent(owner) + "/" + encodeURIComponent(name);
@@ -65,7 +65,7 @@
             if (this.status == 200) {
               var repoDetails = JSON.parse(x.responseText);
               var repoModel = new GAE.model.Repo(repoDetails);
-              GAE.cache.setReposToCache(repoModel);
+              GAE.cache.setReposToCache(repoDetails);
               resolve(repoModel);
             } else {
               var error = new Error(this.statusText);
