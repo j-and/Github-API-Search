@@ -67,7 +67,7 @@
       id: this.getId(),
       size: this.getSize(),
       language: this.getLanguage(),
-      forks: this.getForks(),
+      forks: this.getForks()
 
     };
   }
