@@ -6,11 +6,11 @@
   module.setReposToCache = setReposToCache;
 
   function buildKey(owner, name) {
-    key = owner + '|' + name;
+   return (owner + '|' + name) ;
   }
 
   function getReposFromCache(owner, name) {
-    buildKey(owner, name);
+    var key=buildKey(owner, name);
     try {
       var a = JSON.parse(localStorage.getItem(key));
       var startTime = Date.parse(a.time);
@@ -32,7 +32,8 @@
   }
 
   function setReposToCache(response) {
-    buildKey(response.owner.login, response.name);
+    var key=buildKey(response.owner.login, response.name);
+
     var startTime = new Date();
     var sCache = {
       response: response,
