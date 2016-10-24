@@ -7,25 +7,34 @@
 
   function getReposFromCache(owner, name) {
     var getKey = owner + '|' + name;
-    var a = localStorage.getItem(getKey);
-    if (a != null) {
-      var startTime = Date.parse(localStorage.getItem(getKey).split('}').slice(-1));
+    var a = JSON.parse(localStorage.getItem(getKey));
+    try {
+      var startTime = Date.parse(a.time);
       var finishTime = new Date();
       var delta = (finishTime - startTime);
       console.log("delta", delta);
       if (delta >= 10000) {
-        console.log("clear");
-        localStorage.clear()
+        localStorage.removeItem(getKey);
+        console.log("Data is taken from server");
       }
-      return localStorage.split('}').splice(0, 32);
+      else {
+        console.log("Data is taken from cache");
+        return a['response'];
+      }
+    }
+    catch (err) {
+      console.log("Data is taken from server");
     }
   }
 
   function setReposToCache(response) {
     var setKey = response.owner.login + '|' + response.name;
     var startTime = new Date();
-    var sCache = JSON.stringify(response) + startTime;
-    localStorage.setItem(setKey, sCache);
+    var sCache = {
+      response: response,
+      time: startTime
+    };
+    localStorage.setItem(setKey, JSON.stringify(sCache))
   }
 
 })();
