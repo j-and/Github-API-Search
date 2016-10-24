@@ -5,8 +5,6 @@
   module.getReposFromCache = getReposFromCache;
   module.setReposToCache = setReposToCache;
 
-  var key;
-
   function buildKey(owner, name) {
     key = owner + '|' + name;
   }
