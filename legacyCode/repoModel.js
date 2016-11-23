@@ -14,6 +14,7 @@
     this.size = items.size;
     this.language = items.language;
     this.forks = items.forks;
+    this.avatarUrl=items.owner.avatar_url;
   }
 
   Repo.prototype.getName = function () {
@@ -25,7 +26,7 @@
   };
 
   Repo.prototype.getAvatar = function () {
-    return this.owner.avatar_url;
+    return this.avatarUrl;
   };
 
   Repo.prototype.getUrl = function () {
@@ -71,5 +72,4 @@
 
     };
   }
-
 })();

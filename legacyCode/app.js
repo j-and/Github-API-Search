@@ -30,15 +30,16 @@
     list = $('#list');
     message = $('#message');
     var sourceBlock = $('#block-template').html();
-    inputForm.on("submit", enterSearchTerm);
     buttonSearch.on("click", clearList);
     buttonPrevious.on("click", goToPreviousPage);
     buttonNext.on("click", goToNextPage);
     searchTerm.on("click", clearPage);
+    GAE.filter.init(inputForm);
+    inputForm.on("startSearch", enterSearchTerm);
+
     totalCount = $('#totalCount');
     totalCountLabel = $('#totalCountLabel');
     overlay = $('#overlay');
-
     GAE.modal.init();
     templateBlock = Handlebars.compile(sourceBlock);
 
@@ -54,7 +55,6 @@
     });
 
     var params = GAE.utils.getParamsFromUrl();
-    //console.log("params", params);
     if (params.query) {
       searchTerm.val(params.query);
       if (params.page) {
@@ -65,11 +65,6 @@
     if (params.owner && params.name) {
       GAE.modal.showRepoDetails(params.owner, params.name);
     }
-
-
-
-
-
   }
 
   function enterSearchTerm(event) {
@@ -130,7 +125,7 @@
         repo: repo.toRawObject()
       };
       listContent += templateBlock(context);
-
+      console.log('params',repos)
     });
 
     list.html(listContent);
