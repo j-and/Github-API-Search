@@ -125,7 +125,7 @@
         repo: repo.toRawObject()
       };
       listContent += templateBlock(context);
-
+      console.log('params',repos)
     });
 
     list.html(listContent);
