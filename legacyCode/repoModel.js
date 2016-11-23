@@ -25,7 +25,7 @@
   };
 
   Repo.prototype.getAvatar = function () {
-    return this.owner.avatar_url;
+    return this.owner.avatarUrl;
   };
 
   Repo.prototype.getUrl = function () {
