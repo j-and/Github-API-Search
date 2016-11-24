@@ -52,3 +52,12 @@
 .container{
   position:relative;
 }
+
+.readme{
+  overflow:auto;
+  max-height:200px;
+  padding-left: 20px;
+  padding-right: 20px;
+}
+
+

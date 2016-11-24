@@ -24,17 +24,21 @@
     myModal.modal('show');
     GAE.services.getRepoDetails(owner, name)
       .then(function (repo) {
-        //console.log(repo)
         var context = {
           repo: repo.toRawObject()
         };
-        modalBody.html(template(context));
-        GAE.utils.setParamsToUrl({
-          name: name,
-          owner: owner
-        });
-      })
+        modalBody.html(template(context))
+      });
+    GAE.services.getRepoReadme(owner, name)
+      .then(function (repoReadme) {
+        $("#readme").html(repoReadme);
+      });
+    GAE.utils.setParamsToUrl({
+      name: name,
+      owner: owner
+    });
   }
+
 
   function hideModal() {
     GAE.utils.setParamsToUrl({
