@@ -18,19 +18,21 @@
   function getReposFromCache(owner, name) {
     var key = buildKey(owner, name);
     try {
-      var a = JSON.parse(localStorage.getItem(key));
-      if (checkTimeValidation(a) == true) {
-
-        localStorage.removeItem(key);
-        console.log("Data is taken from server");
-      }
-      else {
-        console.log("Data is taken from cache");
-        return a['responseText'];
+      var item = localStorage.getItem(key);
+      if (item) {
+        var a = JSON.parse(item);
+        if (checkTimeValidation(a)) {
+          localStorage.removeItem(key);
+          console.log("Data is taken from server");
+        }
+        else {
+          console.log("Data is taken from cache");
+          return a['responseText'];
+        }
       }
     }
     catch (err) {
-      console.log("Data is taken from server");
+      console.log("Error!Data from server");
     }
   }
 
@@ -47,18 +49,22 @@
   function getReadmeFromCache(owner, name) {
     var key = buildKey(owner, name);
     try {
-      var a = JSON.parse(localStorage.getItem(key));
-      if (checkTimeValidation(a) == true) {
-        localStorage.removeItem(key);
-        console.log("Readme is taken from server");
+      var item = localStorage.getItem(key);
+      if (item) {
+        var a = JSON.parse(item);
+        if (checkTimeValidation(a)) {
+          localStorage.removeItem(key);
+          console.log("Readme is taken from server");
+        }
+        else {
+          console.log("Readme is taken from cache");
+          return a['readme'];
+        }
       }
-      else {
-        console.log("Readme is taken from cache");
-        //  return a['readme'];
-      }
+
     }
     catch (err) {
-      console.log("Error!Readme is taken from server");
+      console.log("Error!Readme from server");
     }
   }
 
