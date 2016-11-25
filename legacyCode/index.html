@@ -100,7 +100,7 @@
     <div class="thumbnail">
       <div class="caption">
         <div class="row">
-          <div class="col-md-2 visible-md visible-lg"><img class="image-position" src='{{repo.avatarUrl}}' alt="...">
+          <div class="col-md-2 visible-md visible-lg"><img class="image-position" src="{{repo.avatarUrl}}" alt="...">
           </div>
           <div class="col-md-2 col-md-offset-1"><h4>Info</h4></div>
           <label class="col-md-2 col-md-offset-5">{{dateFormat repo.updatedAt}}</label>
@@ -135,7 +135,7 @@
 <!--tableRepoDetails-template-->
 <script id="tableRepoDetails-template" type="text/x-handlebars-template">
   <div>
-    <form class="form-horizontal">
+    <form class="form-horizontal" style="" >
       <div class="form-group">
         <div class="col-sm-2 col-md-offset-3">Id:</div>
         <div class="col-sm-7">
@@ -160,13 +160,12 @@
           {{repo.forks}}
         </div>
       </div>
+      <div class="form-group readme" id="readme"></div>
     </form>
   </div>
 </script>
 
 </body>
-<!--Overlay
-<div id='overlay' class="col-md-8"></div>-->
 </html>
 
 
